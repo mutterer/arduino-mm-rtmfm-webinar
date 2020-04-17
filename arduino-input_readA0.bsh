@@ -1,0 +1,12 @@
+// effacer la console
+mm.scripter().clearMessageWindow();
+
+// lire une propriété et l'afficher
+valeur = mmc.getProperty("Arduino-Input","AnalogInput0");
+print (valeur);
+
+
+
+
+
+

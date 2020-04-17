@@ -1,0 +1,22 @@
+import mmcorej.StrVector;
+
+// on construit le vecteur de pattern
+vec = new StrVector();
+vec.add("1");
+vec.add("2");
+vec.add("4");
+vec.add("31");
+
+// actver le mode sequencage du périphérique arduino-switch
+mmc.setProperty("Arduino-Switch","Sequence","On");
+
+// assigner le veteur de pattern
+mmc.loadPropertySequence("Arduino-Switch", "State", vec);
+
+// démarre le mode séquencage
+mmc.startPropertySequence("Arduino-Switch", "State");
+
+mm.scripter().message("Done");
+
+// pour stopper le sequencage il faudrait faire:
+// mmc.stopPropertySequence("Arduino-Switch", "State");

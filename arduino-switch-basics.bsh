@@ -1,0 +1,12 @@
+// ouvrir le shutter arduino
+mmc.setProperty("Arduino-Shutter","OnOff",1);
+
+// mettre à l'état haut D9 et D11
+mmc.setProperty("Arduino-Switch","State",10);
+mmc.sleep(500);
+
+// fermer le shutter arduino
+mmc.setProperty("Arduino-Shutter","OnOff",0);
+
+
+

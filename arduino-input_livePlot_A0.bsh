@@ -1,0 +1,43 @@
+// script modifié à partir de l'exemple live plot
+// original:  https://github.com/micro-manager/micro-manager/blob/master/scripts/liveDataPlot.bsh
+//
+// ici le graph va être contruit avec les data provenant 
+// de l'entrée analogique AO de l'arduino
+
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.data.time.Millisecond;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+
+// create a series that automatically discard data > 5 seconds old... 
+TimeSeries intensities = new TimeSeries("A0 analog input");// ,"Int", Millisecond.class); 
+intensities.setMaximumItemAge(5000); 
+TimeSeriesCollection dataset = new TimeSeriesCollection(); 
+dataset.addSeries(intensities); 
+JFreeChart chart = ChartFactory.createTimeSeriesChart(
+					"Test", // Title
+               "Time (ms)", // x-axis Label
+               "Intensity", // y-axis Label
+               dataset, // Dataset
+               true, // Show Legend
+               true, // Use tooltips
+               false // Configure chart to generate URLs?
+            );
+ChartFrame graphFrame = new ChartFrame("Test", chart);
+graphFrame.getChartPanel().setMouseWheelEnabled(true);
+graphFrame.getChartPanel().setPreferredSize(new Dimension(400, 300));
+graphFrame.pack();
+graphFrame.setVisible(true);
+
+while (true) {
+   a0 = mmc.getProperty("Arduino-Input","AnalogInput0");
+	intensities.add(new Millisecond(),Double.parseDouble(a0));
+	// Thread.sleep(10);	
+}

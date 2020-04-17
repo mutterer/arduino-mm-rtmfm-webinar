@@ -1,0 +1,23 @@
+mm.scripter().clearMessageWindow();
+
+// noter le temps systeme de départ
+start = (new Date()).getTime();
+
+// réaliser qq opérations d'i/o
+mmc.setProperty("Arduino-Shutter","OnOff",1);
+io=0;
+	for (n=0;n<100;n++) {
+		for (i=0;i<5;i++) {
+			mmc.setProperty("Arduino-Switch","State",Math.pow(2,i));
+			mmc.sleep(10);
+			io++;
+		}
+	}
+mmc.setProperty("Arduino-Shutter","OnOff",0);
+
+// analyser le temps écoulé
+end = (new Date()).getTime();
+print ("nombre d'opérations I/O: "+ (io+2));
+print ((end-start)/(io+2)+" ms en moyenne");
+print ((end-start)-5000+" s de latence");
+

@@ -1,0 +1,28 @@
+// ouvrir le shutter arduino
+mmc.setProperty("Arduino-Shutter","OnOff",1);
+
+// une boucle qui réalise tous les états possibles sur 5 bits
+for (i=0;i<31;i++){
+mmc.setProperty("Arduino-Switch","State",i);
+mmc.sleep(50);
+}
+
+// répéter 3 fois: allumer chacune des leds D8-D12 pendant 100ms
+for (loop = 0; loop<3; loop++){
+	for (i=0;i<5;i++){
+		mmc.setProperty("Arduino-Switch","State",Math.pow(2,i));
+		mmc.sleep(100);
+	}
+}
+
+// répéter 3 fois: allumer toutes les leds D8-D12 100ms et les éteindre 100ms
+for (loop = 0; loop<3; loop++){
+		mmc.setProperty("Arduino-Switch","State",31);
+		mmc.sleep(100);
+		mmc.setProperty("Arduino-Switch","State",0);
+		mmc.sleep(100);
+}
+
+// fermer le shutter arduino
+mmc.setProperty("Arduino-Shutter","OnOff",0);
+
